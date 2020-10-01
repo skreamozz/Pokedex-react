@@ -1,8 +1,8 @@
 import React from 'react';
 import {ListGroup} from 'react-bootstrap'
 
-const Types = (props) => {
-    const {types} = props;
+const Types = ({types}) => {
+    
     if(types.lenght === 0) return;
     return (
         <ListGroup className='mt-2'>

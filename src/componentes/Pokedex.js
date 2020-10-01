@@ -1,41 +1,20 @@
-import React, {useState,useEffect} from 'react';
+import React from 'react';
 import {Sprite, Types, Descripcion} from './index';
 import {Card,Row,Col} from 'react-bootstrap';
-
+import usePokedex from '../hooks/usePokedex';
 
 
 
 
 const Pokedex = () => {
-    const [pokemon,setPokemon] = useState('');
-    const [pokemonData, setPokemonData] = useState(); 
-    const [waiting , setWaiting] = useState(true);
-    const [error , setError] = useState('');
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setWaiting(true);
-        if(pokemon === '') return;
-        fetch('https://pokeapi.co/api/v2/pokemon/' + pokemon)
-        .then((rawRes) =>rawRes.json())
-        .then(resJson => {
-            setPokemonData({...resJson}); 
-            setWaiting(false);
-        }).catch((err) => {
-            setError(err);
-        });
-
-
-
-    }
-    
-    useEffect(() => {
-        setPokemon('');
-        setError('');
-    },[pokemonData]);
-    
-    const handleChange = (e) => {
-        setPokemon(e.target.value)
-    }   
+    const {
+        pokemon,
+        pokemonData,
+        waiting,
+        error,
+        handleChange,
+        handleSubmit
+    } = usePokedex();
 
     return (
         <Row>

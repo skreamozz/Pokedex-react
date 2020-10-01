@@ -1,8 +1,8 @@
 import React from 'react';
 import {Card,Image} from 'react-bootstrap';
 
-const Sprite = (props) => {
-    const {spriteSrc} = props;
+const Sprite = ({spriteSrc}) => {
+    
     if(spriteSrc === '')return spriteSrc;
     return (
         <Card border="success" >

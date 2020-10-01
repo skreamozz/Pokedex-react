@@ -1,18 +1,9 @@
-import React,{useState,useEffect} from 'react';
+import React from 'react';
 import {Card} from 'react-bootstrap';
+import useDescripcion from '../hooks/useDescripcion'
 
 const Descripcion = ({url=''}) => {
-    const [Desc, setDesc ] = useState([]);
-    useEffect(()=>{
-        const obtenerData = () => {
-            fetch(url)
-            .then(res => res.json())
-            .then(res => { setDesc([...res.flavor_text_entries])})
-            .catch(err => {});
-        }
-        obtenerData();
-        
-    },[url]);
+    const Desc = useDescripcion(url);
     
     return (
         <div>
