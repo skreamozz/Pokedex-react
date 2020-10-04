@@ -3,9 +3,6 @@ import {Sprite, Types, Descripcion} from './index';
 import {Card,Row,Col} from 'react-bootstrap';
 import usePokedex from '../hooks/usePokedex';
 
-
-
-
 const Pokedex = () => {
     const {
         pokemon,
@@ -55,6 +52,8 @@ const Cuerpo = ({data}) => {
         </Card.Body>
     </Card>);
 }
+
+
 const Spinner = ({dibujar = false}) => {
     if(!dibujar) return '';
     return (
@@ -63,8 +62,6 @@ const Spinner = ({dibujar = false}) => {
         </div>
     );
 }
-
-
 
 
 export default Pokedex;

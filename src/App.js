@@ -3,7 +3,7 @@ import { Pokedex } from './componentes';
 import { Container } from 'react-bootstrap';
 
 
-function App() {
+const App = () => {
   return (
     <Container>
       <Pokedex/>
