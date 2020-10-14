@@ -14,7 +14,7 @@ const Pokedex = () => {
     } = usePokedex();
 
     return (
-        <Row>
+        <Row className='mt-5'>
             <Col sm={6} lg={6} md={6} className='m-auto'>
                 <Card className="mt-4">
                     <form className='card-body' onSubmit={handleSubmit}>
