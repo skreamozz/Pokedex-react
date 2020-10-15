@@ -3,14 +3,13 @@ import { useEffect } from 'react';
 import {Card, Image,Spinner} from 'react-bootstrap';
 
 const Sprite = ({spriteSrc}) => {
-    const [sprite,setSprite] = useState();
+    const [sprite,setSprite] = useState(null);
 
     useEffect(()=>{
         const obtenerSprite = async () => {
-            setSprite(null);
             const result = await fetch(spriteSrc.front_default);
             const raw = await result.blob();
-            const img = URL.createObjectURL(raw);
+            const img =await URL.createObjectURL(raw);
             setSprite(img);
 
 
@@ -25,7 +24,7 @@ const Sprite = ({spriteSrc}) => {
 
     return (
         <Card border="success" >
-               {sprite?
+               {sprite != null?
                 <Image fluid className=' m-auto' src={sprite} alt='sprite' />:
                 <Spinner animation='border' className='m-auto' /> }       
         </Card>
