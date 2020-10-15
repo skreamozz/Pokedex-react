@@ -9,9 +9,32 @@ const Pokedex = () => {
         pokemonData,
         waiting,
         error,
-        handleChange,
-        handleSubmit
+        setPokemonData,
+        setWaiting,
+        setPokemon,
+        setError
     } = usePokedex();
+    const handleChange = ({target}) => {
+        setPokemon(target.value)
+    }  
+    const handleSubmit = (e) => {
+        e.preventDefault();   
+        if(pokemon === '') return;
+        setWaiting(true);
+        fetch('https://pokeapi.co/api/v2/pokemon/' + pokemon)
+        .then(rawRes =>rawRes.json())
+        .then(resJson => {
+            setPokemonData({...resJson}); 
+            setWaiting(false);
+        }).catch((err) => {
+            setError(err);
+        });
+
+
+
+    }
+
+
 
     return (
         <Row className='mt-5'>

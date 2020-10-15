@@ -1,4 +1,9 @@
 import React,{useState,useEffect} from 'react';
+import {Container,Row, Pagination, Col, CardDeck} from 'react-bootstrap';
+import { PokemonCard } from '../componentes'
+
+const limitBase= 5;
+const urlBase = 'https://pokeapi.co/api/v2/pokemon/?offset=0&limit=' + limitBase;
 
 const ListadoPokemon = () => {
     const [Listado,setListado] = useState({});
@@ -13,7 +18,7 @@ const ListadoPokemon = () => {
 
 
     useEffect(()=>{
-        pedirListado('https://pokeapi.co/api/v2/pokemon/');
+        pedirListado(urlBase);
     },[]);
     useEffect(()=>{
         setPaginaSiguiente(Listado.next || null);
@@ -27,25 +32,42 @@ const ListadoPokemon = () => {
         e.preventDefault();
         pedirListado(PaginaAnterior);
     }
+    const handlePrimero = (e) => {
+        e.preventDefault();
+        pedirListado(urlBase);
+    }
+    const handleUltimo = e => {
+        e.preventDefault();
+        pedirListado(`https://pokeapi.co/api/v2/pokemon/?offset=${Listado.count}&limit=${limitBase}`)
+
+    }
 
     return (
-    <>
-    <hr></hr>
-    <hr></hr>
-    <hr></hr>
-    <hr></hr>
-    <hr></hr>
-    <hr></hr>
-    <hr></hr>
-    <hr></hr>
-    <hr></hr>
-        <button onClick={handleSiguiente} disabled={!PaginaSiguiente}>siguiente </button>
-        <button onClick={handleAnterior} disabled={!PaginaAnterior}>anterior</button>
-        <h1>pagina Anterior:{PaginaAnterior}</h1>
-        <h1>pagina Siguiente:{PaginaSiguiente}</h1>
-        <button onClick={handleSiguiente} disabled={!PaginaSiguiente}>siguiente </button>
-        <button onClick={handleAnterior} disabled={!PaginaAnterior}>anterior</button>
-    </>
+    <Container className='mt-5'>
+        <Row className='mt-5'>
+            <Col className='mt-5' lg={10} >
+                <Pagination>
+                    <Pagination.First onClick={handlePrimero} disabled={!PaginaAnterior} />
+                    <Pagination.Prev onClick={handleAnterior} disabled={!PaginaAnterior} />
+                    <Pagination.Next onClick={handleSiguiente} disabled={!PaginaSiguiente} />
+                    <Pagination.Last onClick={handleUltimo} disabled={!PaginaSiguiente}/>
+                </Pagination>
+                <CardDeck>
+                    {
+                        Listado.results ? 
+                        Listado.results.map(pokemon => <PokemonCard pokemon = {pokemon}/>): 
+                        <div></div>
+                    }
+                </CardDeck>
+                <Pagination className='mt-3'>
+                    <Pagination.First onClick={handlePrimero} disabled={!PaginaAnterior} />
+                    <Pagination.Prev onClick={handleAnterior} disabled={!PaginaAnterior} />
+                    <Pagination.Next onClick={handleSiguiente} disabled={!PaginaSiguiente} />
+                    <Pagination.Last onClick={handleUltimo} disabled={!PaginaSiguiente}/>
+                </Pagination>
+            </Col>
+        </Row>
+    </Container>
     );
 };
 

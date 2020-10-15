@@ -6,7 +6,7 @@ import {BrowserRouter as Router, Switch,Route, Link} from 'react-router-dom';
 const App = () => {
   return (
     <Router>
-      <Navbar bg='primary' variant='dark' fixed='top'>
+      <Navbar expand='lg' bg='primary' variant='dark' fixed='top'>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav>
