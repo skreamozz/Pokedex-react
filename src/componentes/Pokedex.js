@@ -41,7 +41,7 @@ const Pokedex = () => {
             <Col sm={6} lg={6} md={6} className='m-auto'>
                 <Card className="mt-4">
                     <form className='card-body' onSubmit={handleSubmit}>
-                        <input value={pokemon} name='pokemon' onChange={handleChange} type="text" className='form-control'/>
+                        <input value={pokemon} placeholder='ingrese nombre de pokemon o id' name='pokemon' onChange={handleChange} type="text" className='form-control'/>
 
                         <Targeta pokemon={pokemon} pokemonData={pokemonData} error={error} waiting={waiting} />
                         

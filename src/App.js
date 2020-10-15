@@ -15,7 +15,7 @@ const App = () => {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-      <Container>
+      <Container fluid>
           <Switch>
             <Route path='/listado'>
                 <ListadoPokemon/>

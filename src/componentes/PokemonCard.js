@@ -21,7 +21,7 @@ const PokemonCard = ({pokemon}) => {
             <Card.Header>
                 <Card.Title>{pokemon.name}</Card.Title>
             </Card.Header>
-            <Card.Body>
+            <Card.Body className='p-1'>
                     <Sprite spriteSrc={pokemonData.sprites || ''}/>
             </Card.Body>
         </Card>

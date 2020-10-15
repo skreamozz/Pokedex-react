@@ -46,9 +46,9 @@ const ListadoPokemon = () => {
     }
 
     return (
-    <Container className='mt-5'>
+    <Container fluid className='mt-5'>
         <Row className='mt-5'>
-            <Col className='mt-5' lg={10} >
+            <Col className='mt-5' >
                 <Pagination>
                     <Pagination.First onClick={handlePrimero} disabled={!PaginaAnterior} />
                     <Pagination.Prev onClick={handleAnterior} disabled={!PaginaAnterior} />
