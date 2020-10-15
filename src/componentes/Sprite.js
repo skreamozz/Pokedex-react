@@ -1,12 +1,32 @@
-import React from 'react';
-import {Card, Image} from 'react-bootstrap';
+import React , { useState } from 'react';
+import { useEffect } from 'react';
+import {Card, Image,Spinner} from 'react-bootstrap';
 
 const Sprite = ({spriteSrc}) => {
-    
-    if(spriteSrc === '')return spriteSrc;
+    const [sprite,setSprite] = useState();
+
+    useEffect(()=>{
+        const obtenerSprite = async () => {
+            const result = await fetch(spriteSrc.front_default);
+            const raw = await result.blob();
+            const img = URL.createObjectURL(raw);
+            setSprite(img);
+
+
+        }
+        setSprite(null);
+        obtenerSprite();
+
+    },[spriteSrc]);
+
+
+
+
     return (
         <Card border="success" >
-                <Image fluid className=' m-auto' src={spriteSrc.front_default || ''} alt='sprite'/>      
+               {sprite?
+                <Image fluid className=' m-auto' src={sprite} alt='sprite'/>:
+                <Spinner animation='border' className='m-auto' /> }       
         </Card>
     );
 };

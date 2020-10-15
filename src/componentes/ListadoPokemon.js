@@ -13,7 +13,6 @@ const ListadoPokemon = () => {
         const resultado = await fetch(url);
         const lista = await resultado.json();
         setListado(lista);
-        console.log(lista);
     }
 
 
@@ -55,7 +54,7 @@ const ListadoPokemon = () => {
                 <CardDeck>
                     {
                         Listado.results ? 
-                        Listado.results.map(pokemon => <PokemonCard pokemon = {pokemon}/>): 
+                        Listado.results.map((pokemon,key) => <PokemonCard key={key} pokemon = {pokemon}/>): 
                         <div></div>
                     }
                 </CardDeck>
