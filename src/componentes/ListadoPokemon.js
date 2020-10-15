@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import {Container,Row, Pagination, Col, CardDeck} from 'react-bootstrap';
+import {Container,Row, Pagination, Col, CardDeck,Spinner} from 'react-bootstrap';
 import { PokemonCard } from '../componentes'
 
 const limitBase= 5;
@@ -10,6 +10,7 @@ const ListadoPokemon = () => {
     const [PaginaSiguiente,setPaginaSiguiente] = useState('');
     const [PaginaAnterior,setPaginaAnterior] = useState('');
     const pedirListado = async (url) =>{
+        setListado({});
         const resultado = await fetch(url);
         const lista = await resultado.json();
         setListado(lista);
@@ -20,19 +21,22 @@ const ListadoPokemon = () => {
         pedirListado(urlBase);
     },[]);
     useEffect(()=>{
-        setPaginaSiguiente(Listado.next || null);
-        setPaginaAnterior(Listado.previous || null);
+        setPaginaSiguiente(Listado.next );
+        setPaginaAnterior(Listado.previous);
     },[Listado]);
     const handleSiguiente = (e) => {
         e.preventDefault();
+        
         pedirListado(PaginaSiguiente);
     }
     const handleAnterior = (e) => {
         e.preventDefault();
+        
         pedirListado(PaginaAnterior);
     }
     const handlePrimero = (e) => {
         e.preventDefault();
+        
         pedirListado(urlBase);
     }
     const handleUltimo = e => {
@@ -55,7 +59,7 @@ const ListadoPokemon = () => {
                     {
                         Listado.results ? 
                         Listado.results.map((pokemon,key) => <PokemonCard key={key} pokemon = {pokemon}/>): 
-                        <div></div>
+                        <Spinner animation='border' className='m-auto' />
                     }
                 </CardDeck>
                 <Pagination className='mt-3'>

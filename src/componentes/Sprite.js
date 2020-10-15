@@ -7,6 +7,7 @@ const Sprite = ({spriteSrc}) => {
 
     useEffect(()=>{
         const obtenerSprite = async () => {
+            setSprite(null);
             const result = await fetch(spriteSrc.front_default);
             const raw = await result.blob();
             const img = URL.createObjectURL(raw);
@@ -14,7 +15,7 @@ const Sprite = ({spriteSrc}) => {
 
 
         }
-        setSprite(null);
+        
         obtenerSprite();
 
     },[spriteSrc]);
@@ -25,7 +26,7 @@ const Sprite = ({spriteSrc}) => {
     return (
         <Card border="success" >
                {sprite?
-                <Image fluid className=' m-auto' src={sprite} alt='sprite'/>:
+                <Image fluid className=' m-auto' src={sprite} alt='sprite' />:
                 <Spinner animation='border' className='m-auto' /> }       
         </Card>
     );
