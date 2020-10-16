@@ -21,7 +21,7 @@ const Pokedex = () => {
         e.preventDefault();   
         if(pokemon === '') return;
         setWaiting(true);
-        fetch('https://pokeapi.co/api/v2/pokemon/' + pokemon)
+        fetch('https://pokeapi.co/api/v2/pokemon/' + pokemon.toLowerCase())
         .then(rawRes =>rawRes.json())
         .then(resJson => {
             setPokemonData({...resJson}); 
