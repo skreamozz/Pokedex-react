@@ -1,10 +1,9 @@
-import React ,{ useState } from 'react';
-import { useEffect } from 'react';
+import React ,{ useState,useEffect } from 'react';
 import {Card} from 'react-bootstrap';
 import {Sprite} from '../componentes'
 
 const PokemonCard = ({pokemon}) => {
-    const [pokemonData,setPokemonData] = useState({});
+    const [pokemonData,setPokemonData] = useState();
 
     useEffect(()=>{
         const PedirPokemon = async () => {
@@ -17,12 +16,15 @@ const PokemonCard = ({pokemon}) => {
 
 
     return (
+        pokemonData === undefined ? '':
         <Card>
             <Card.Header>
-                <Card.Title>{pokemon.name}</Card.Title>
+                <Card.Title>{`${pokemon.name} #${pokemonData.id || ''}`}</Card.Title>
             </Card.Header>
+
+
             <Card.Body className='p-1'>
-                    <Sprite spriteSrc={pokemonData.sprites || ''}/>
+                <Sprite spriteSrc={pokemonData.sprites || ''}/>
             </Card.Body>
         </Card>
     );
