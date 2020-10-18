@@ -1,30 +1,18 @@
-import React ,{ useState,useEffect } from 'react';
+import React from 'react';
 import {Card} from 'react-bootstrap';
 import {Sprite} from '../componentes'
 
 const PokemonCard = ({pokemon}) => {
-    const [pokemonData,setPokemonData] = useState();
-
-    useEffect(()=>{
-        const PedirPokemon = async () => {
-            const result = await fetch(pokemon.url);
-            const poke = await result.json();
-            setPokemonData(poke);
-         }
-        PedirPokemon();
-    },[pokemon]);
-
 
     return (
-        pokemonData === undefined ? '':
         <Card>
             <Card.Header>
-                <Card.Title>{`${pokemon.name} #${pokemonData.id || ''}`}</Card.Title>
+                <Card.Title>{`${pokemon.name} #${pokemon.id || ''}`}</Card.Title>
             </Card.Header>
-
+                {console.log(pokemon)}
 
             <Card.Body className='p-1'>
-                <Sprite spriteSrc={pokemonData.sprites || ''}/>
+                <Sprite spriteSrc={pokemon.sprites || ''}/>
             </Card.Body>
         </Card>
     );
