@@ -9,7 +9,7 @@ const PokemonCard = ({pokemon}) => {
             <Card.Header>
                 <Card.Title>{`${pokemon.name} #${pokemon.id || ''}`}</Card.Title>
             </Card.Header>
-                {console.log(pokemon)}
+
 
             <Card.Body className='p-1'>
                 <Sprite spriteSrc={pokemon.sprites || ''}/>

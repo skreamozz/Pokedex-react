@@ -26,8 +26,6 @@ const ListadoPokemon = () => {
             fetchs = results;
         });
         setPokes(fetchs);
-        console.log(fetchs);
-
     }   
 
 
