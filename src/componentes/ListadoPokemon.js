@@ -12,7 +12,7 @@ const ListadoPokemon = () => {
     const [PaginaAnterior,setPaginaAnterior] = useState('');
     
     const pedirListado = async (url) =>{
-        setListado(null);
+        setListado({});
         const resultado = await fetch(url);
         const lista = await resultado.json();
         setListado(lista);
