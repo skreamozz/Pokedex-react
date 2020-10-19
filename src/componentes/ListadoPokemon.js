@@ -13,19 +13,19 @@ const ListadoPokemon = () => {
     
     const pedirListado = async (url) =>{
         setListado({});
+        setPokes(null);
         const resultado = await fetch(url);
         const lista = await resultado.json();
-        setListado(lista);
+        await setListado(lista);
     }
 
     const pedirPokemons = async (lista) => {
         let fetchs = [];
-        setPokes(null);
         const data = await lista.results.map(x => fetch(x.url).then(x => x.json()));
         await Promise.all(data).then(results => {
             fetchs = results;
         });
-        setPokes(fetchs);
+        await setPokes(fetchs);
     }   
 
 
@@ -41,53 +41,58 @@ const ListadoPokemon = () => {
         pedirPokemons(Listado);
     },[Listado]);
     
-    
-    const handleSiguiente = (e) => {
-        e.preventDefault();
-        
-        pedirListado(PaginaSiguiente);
-    }
-    
-    const handleAnterior = (e) => {
-        e.preventDefault();
-        
-        pedirListado(PaginaAnterior);
-    }
-    
-    const handlePrimero = (e) => {
-        e.preventDefault();
-        
-        pedirListado(urlBase);
-    }
-    
-    const handleUltimo = e => {
-        e.preventDefault();
-        pedirListado(`https://pokeapi.co/api/v2/pokemon/?offset=${Listado.count}&limit=${limitBase}`)
 
+    const handlePaginacion = (name) => (e) => {
+        e.preventDefault();
+        let url;
+        switch(name){
+            case 'primero':{
+                url = urlBase;
+                break;
+            }
+            case 'previo':{
+                url = PaginaAnterior;
+                break;
+            }
+            case 'siguiente':{
+                url = PaginaSiguiente;
+                break;
+            }
+            case 'ultimo':{
+                url = `https://pokeapi.co/api/v2/pokemon/?offset=${Listado.count}&limit=${limitBase}`;
+                break;
+            }
+            default:{
+                break;
+            }
+        }
+            pedirListado(url);
     }
+
+    
 
     return (
     <Container fluid className='mt-5'>
         <Row className='mt-5'>
             <Col className='mt-5' >
                 <Pagination>
-                    <Pagination.First onClick={handlePrimero} disabled={!PaginaAnterior} />
-                    <Pagination.Prev onClick={handleAnterior} disabled={!PaginaAnterior} />
-                    <Pagination.Next onClick={handleSiguiente} disabled={!PaginaSiguiente} />
-                    <Pagination.Last onClick={handleUltimo} disabled={!PaginaSiguiente}/>
+                    <Pagination.First onClick={handlePaginacion('primero')} disabled={!(PaginaAnterior && pokes)} />
+                    <Pagination.Prev onClick={handlePaginacion('previo')} disabled={!(PaginaAnterior && pokes)} />
+                    <Pagination.Next onClick={handlePaginacion('siguiente')} disabled={!(PaginaSiguiente && pokes)} />
+                    <Pagination.Last onClick={handlePaginacion('ultimo')} disabled={!(PaginaSiguiente && pokes)}/>
                 </Pagination>
                 <CardDeck>
                     {
-                        pokes ? 
+                        (pokes && Listado.results)? 
                         pokes.map((pokemon,key) => <PokemonCard key={key} pokemon = {pokemon}/>): 
                         <Spinner animation='border' className='m-auto' />
                     }
                 </CardDeck>
                 <Pagination className='mt-3'>
-                    <Pagination.First onClick={handlePrimero} disabled={!PaginaAnterior} />
-                    <Pagination.Prev onClick={handleAnterior} disabled={!PaginaAnterior} />
-                    <Pagination.Next onClick={handleSiguiente} disabled={!PaginaSiguiente} />
-                    <Pagination.Last onClick={handleUltimo} disabled={!PaginaSiguiente}/>
+                    <Pagination.First onClick={handlePaginacion('primero')} disabled={!(PaginaAnterior && pokes)} />
+                    <Pagination.Prev onClick={handlePaginacion('previo')} disabled={!(PaginaAnterior && pokes)} />
+                    <Pagination.Next onClick={handlePaginacion('siguiente')} disabled={!(PaginaSiguiente && pokes)} />
+                    <Pagination.Last onClick={handlePaginacion('ultimo')} disabled={!(PaginaSiguiente && pokes)}/>
                 </Pagination>
             </Col>
         </Row>
