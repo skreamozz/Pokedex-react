@@ -13,12 +13,12 @@ const Provider = () => {
 
 const App = () => {
   return (
-      <Container>
+      <Container className = 'vh-100'>
         <Row>
           <Col lg={5}>
             <Pokedex/>
           </Col>
-          <Col lg={5}>
+          <Col lg={6}>
             <ListadoPokemon/>
           </Col>
         </Row>
