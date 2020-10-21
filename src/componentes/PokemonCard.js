@@ -1,18 +1,22 @@
 import React from 'react';
 import {Card} from 'react-bootstrap';
 import {Sprite} from '../componentes'
-
-const PokemonCard = ({pokemon}) => {
-
+import { usePokemonContext } from '../context/PokemonContext'
+const PokemonCard = ({pokemonProp}) => {
+    const {setPokemonSeleccionado} = usePokemonContext();
+    const handleClick = (e) => {
+        setPokemonSeleccionado(`${pokemonProp.id}`);
+        window.scrollTo({ top: 0, behavior: 'smooth'});
+    }
     return (
-        <Card>
-            <Card.Header>
-                <Card.Title>{`${pokemon.name} #${pokemon.id || ''}`}</Card.Title>
+        <Card onClick={handleClick} className='p-1 m-2 ' >
+            <Card.Header className='p-1'>
+                <Card.Title>{`${pokemonProp.name} #${pokemonProp.id || ''}`}</Card.Title>
             </Card.Header>
 
 
-            <Card.Body className='p-1'>
-                <Sprite spriteSrc={pokemon.sprites || ''}/>
+            <Card.Body className='p-1' >
+                <Sprite spriteSrc={pokemonProp.sprites || ''}/>
             </Card.Body>
         </Card>
     );

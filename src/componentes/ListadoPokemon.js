@@ -1,8 +1,8 @@
 import React,{useState,useEffect} from 'react';
-import {Container,Row, Pagination, Col, CardDeck,Spinner} from 'react-bootstrap';
+import {CardColumns, Container, Pagination,Spinner} from 'react-bootstrap';
 import { PokemonCard } from '../componentes'
 
-const limitBase= 5;
+const limitBase= 6;
 const urlBase = 'https://pokeapi.co/api/v2/pokemon/?offset=0&limit=' + limitBase;
 
 const ListadoPokemon = () => {
@@ -16,7 +16,7 @@ const ListadoPokemon = () => {
         setPokes(null);
         const resultado = await fetch(url);
         const lista = await resultado.json();
-        await setListado(lista);
+         setListado(lista);
     }
 
     const pedirPokemons = async (lista) => {
@@ -25,7 +25,7 @@ const ListadoPokemon = () => {
         await Promise.all(data).then(results => {
             fetchs = results;
         });
-        await setPokes(fetchs);
+         setPokes(fetchs);
     }   
 
 
@@ -72,30 +72,30 @@ const ListadoPokemon = () => {
     
 
     return (
-    <Container fluid className='mt-5'>
-        <Row className='mt-5'>
-            <Col className='mt-5' >
+    <Container fluid className='mt-4'>
                 <Pagination>
                     <Pagination.First onClick={handlePaginacion('primero')} disabled={!(PaginaAnterior && pokes)} />
                     <Pagination.Prev onClick={handlePaginacion('previo')} disabled={!(PaginaAnterior && pokes)} />
                     <Pagination.Next onClick={handlePaginacion('siguiente')} disabled={!(PaginaSiguiente && pokes)} />
                     <Pagination.Last onClick={handlePaginacion('ultimo')} disabled={!(PaginaSiguiente && pokes)}/>
                 </Pagination>
-                <CardDeck>
-                    {
-                        (pokes && Listado.results)? 
-                        pokes.map((pokemon,key) => <PokemonCard key={key} pokemon = {pokemon}/>): 
-                        <Spinner animation='border' className='m-auto' />
-                    }
-                </CardDeck>
+                
+                    <Container fluid className='p-1'>
+                        <CardColumns>
+                            {
+                                (pokes && Listado.results)? 
+                                pokes.map((pokemon,key) => <PokemonCard key={key} pokemonProp = {pokemon}/>): 
+                                <Spinner animation='border' className='m-auto' />
+                            }
+                        </CardColumns>
+                    </Container>
+                    
                 <Pagination className='mt-3'>
                     <Pagination.First onClick={handlePaginacion('primero')} disabled={!(PaginaAnterior && pokes)} />
                     <Pagination.Prev onClick={handlePaginacion('previo')} disabled={!(PaginaAnterior && pokes)} />
                     <Pagination.Next onClick={handlePaginacion('siguiente')} disabled={!(PaginaSiguiente && pokes)} />
                     <Pagination.Last onClick={handlePaginacion('ultimo')} disabled={!(PaginaSiguiente && pokes)}/>
                 </Pagination>
-            </Col>
-        </Row>
     </Container>
     );
 };

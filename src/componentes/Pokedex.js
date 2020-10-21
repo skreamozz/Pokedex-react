@@ -1,29 +1,29 @@
-import React from 'react';
+import React, {useEffect,useCallback} from 'react';
 import {Sprite, Types, Descripcion} from './index';
-import {Card,Spinner,Row,Col} from 'react-bootstrap';
+import {Card,Spinner} from 'react-bootstrap';
 import usePokedex from '../hooks/usePokedex';
-
+import {usePokemonContext} from '../context/PokemonContext';
 const Pokedex = () => {
+    const {pokemonSeleccionado} = usePokemonContext();
     const {
         pokemon,
         pokemonData,
         error,
         waiting,
         setPokemonData,
-        setPokemon,
         setWaiting,
+        setPokemon,
         setError
     } = usePokedex();
-    const handleChange = ({target}) => {
-        setPokemon(target.value)
-    }  
-    const handleSubmit = async (e) => {
-        e.preventDefault();   
-        if(pokemon === '') return;
+    
+    
+    
+    const pedirPokemon = useCallback(async (poke) => {
+        if(poke === '') return;
         try{
             await setPokemonData();
             setWaiting(true);
-            const resJSon = await fetch('https://pokeapi.co/api/v2/pokemon/' + pokemon.toLowerCase())
+            const resJSon = await fetch('https://pokeapi.co/api/v2/pokemon/' + poke.toLowerCase())
             .then(rawRes =>rawRes.json());
             setPokemonData(resJSon);
             setWaiting(false);
@@ -31,18 +31,28 @@ const Pokedex = () => {
             setWaiting(false);
             setError(err);
         }
-        
+    },[setError,setPokemonData,setWaiting]);
 
 
 
+    const handleChange = ({target}) => {
+        setPokemon(target.value)
+    }  
+    const handleSubmit = async (e) => {
+        e.preventDefault();   
+       
+        await pedirPokemon(pokemon);
 
     }
+
+    useEffect(()=>{
+        pedirPokemon(pokemonSeleccionado)
+    },[pokemonSeleccionado,pedirPokemon]);
 
 
 
     return (
-        <Row className='mt-5'>
-            <Col sm={6} lg={6} md={6} className='m-auto'>
+            
                 <Card className="mt-4">
                     <form className='card-body' onSubmit={handleSubmit}>
                         <input value={pokemon} placeholder='ingrese nombre de pokemon o id' name='pokemon' onChange={handleChange} type="text" className='form-control'/>
@@ -59,8 +69,7 @@ const Pokedex = () => {
                         
                     </form>
                 </Card>
-            </Col>
-        </Row>
+        
     );
 };
 
