@@ -63,10 +63,11 @@ const Pokedex = () => {
     },[]);
 
     return (
-            
-                <Card className="mt-4">
-                    <form className='card-body' onSubmit={handleSubmit}>
-                        <input value={pokemon} placeholder='ingrese nombre de pokemon o id' name='pokemon' onChange={handleChange} type="text" className='form-control'/>
+        <form className='mt-4'onSubmit={handleSubmit}>
+            <input value={pokemon} placeholder='ingrese nombre de pokemon o id' name='pokemon' onChange={handleChange} type="text" className='form-control'/>
+                <Card className="mt-2 overflow-auto" style={{maxHeight:'85vh',borderRadius:'5px'}}> 
+                    <Card.Body>
+                        
 
                         {
                             !waiting ? 
@@ -78,15 +79,15 @@ const Pokedex = () => {
                         
                         
                         
-                    </form>
+                    </Card.Body>
                 </Card>
-        
+        </form>
     );
 };
 
 const Cuerpo = ({data}) => {
     return(
-    <Card className='mt-2'>
+    <Card className='mt-2 overflow-auto'>
         <Card.Header><h3>{data.name}</h3></Card.Header>
         <Card.Body>
             <Sprite spriteSrc={data.sprites}/> 
