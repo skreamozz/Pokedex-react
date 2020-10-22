@@ -46,7 +46,8 @@ const Pokedex = () => {
     
     const handleSubmit = async (e) => {
         e.preventDefault(); 
-        const pokes = Lista.find(x => x.name.startsWith(pokemon));
+        const pokes = Lista.find(x => x.name.startsWith(pokemon.toLowerCase()));
+        console.log(pokes);
         pokes? 
         await pedirPokemon(pokes.name):
         await pedirPokemon(pokemon);
