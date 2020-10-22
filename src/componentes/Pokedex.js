@@ -1,9 +1,10 @@
-import React, {useEffect,useCallback} from 'react';
+import React, {useEffect,useCallback, useState} from 'react';
 import {Sprite, Types, Descripcion} from './index';
 import {Card,Spinner} from 'react-bootstrap';
 import usePokedex from '../hooks/usePokedex';
 import {usePokemonContext} from '../context/PokemonContext';
 const Pokedex = () => {
+    const [Lista,setLista] = useState();
     const {pokemonSeleccionado} = usePokemonContext();
     const {
         pokemon,
@@ -33,14 +34,22 @@ const Pokedex = () => {
         }
     },[setError,setPokemonData,setWaiting]);
 
-
+    const pedirLista = async () => {
+       const lista =  await fetch('https://pokeapi.co/api/v2/pokemon/?offset=0&limit=10000')
+       .then(res => res.json());
+       setLista(lista.results);
+    }
 
     const handleChange = ({target}) => {
         setPokemon(target.value)
     }  
+    
     const handleSubmit = async (e) => {
-        e.preventDefault();   
-       
+        e.preventDefault(); 
+        const pokes = Lista.find(x => x.name.startsWith(pokemon.toLowerCase()));
+        console.log(pokes);
+        pokes? 
+        await pedirPokemon(pokes.name):
         await pedirPokemon(pokemon);
 
     }
@@ -49,7 +58,9 @@ const Pokedex = () => {
         pedirPokemon(pokemonSeleccionado)
     },[pokemonSeleccionado,pedirPokemon]);
 
-
+    useEffect(() => {
+        pedirLista();
+    },[]);
 
     return (
             

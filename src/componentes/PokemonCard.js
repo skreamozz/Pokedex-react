@@ -9,7 +9,7 @@ const PokemonCard = ({pokemonProp}) => {
         window.scrollTo({ top: 0, behavior: 'smooth'});
     }
     return (
-        <Card onClick={handleClick} className='p-1 m-2 ' >
+        <Card onClick={handleClick} style={{cursor:'pointer' }} className='p-1 m-2 ' >
             <Card.Header className='p-1'>
                 <Card.Title>{`${pokemonProp.name} #${pokemonProp.id || ''}`}</Card.Title>
             </Card.Header>

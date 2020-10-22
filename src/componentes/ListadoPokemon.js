@@ -1,15 +1,16 @@
 import React,{useState,useEffect} from 'react';
-import {CardColumns, Container, Pagination,Spinner} from 'react-bootstrap';
-import { PokemonCard } from '../componentes'
-
+import {CardColumns, Container,Spinner} from 'react-bootstrap';
+import { PokemonCard,Paginacion } from '../componentes';
 const limitBase= 6;
 const urlBase = 'https://pokeapi.co/api/v2/pokemon/?offset=0&limit=' + limitBase;
 
 const ListadoPokemon = () => {
     const [Listado,setListado] = useState({});
     const [pokes, setPokes] = useState(null);
+    const [offset, setOffset] = useState(0);
     const [PaginaSiguiente,setPaginaSiguiente] = useState('');
     const [PaginaAnterior,setPaginaAnterior] = useState('');
+    const [PaginaActual,setPaginaActual] = useState(1);
     
     const pedirListado = async (url) =>{
         setListado({});
@@ -45,42 +46,58 @@ const ListadoPokemon = () => {
     const handlePaginacion = (name) => (e) => {
         e.preventDefault();
         let url;
+        let pagina = PaginaActual;
+        let offsetTemp = offset;
         switch(name){
             case 'primero':{
+                offsetTemp = 0;
                 url = urlBase;
+                pagina = 1;
                 break;
             }
             case 'previo':{
                 url = PaginaAnterior;
+                --pagina;
+                if(pagina <= (limitBase * offsetTemp) ) offsetTemp--
                 break;
             }
             case 'siguiente':{
                 url = PaginaSiguiente;
+                ++pagina;
+                if(pagina > (limitBase * offsetTemp) + limitBase) offsetTemp++;
                 break;
             }
             case 'ultimo':{
-                url = `https://pokeapi.co/api/v2/pokemon/?offset=${Listado.count}&limit=${limitBase}`;
+                url = `https://pokeapi.co/api/v2/pokemon/?offset=${Listado.count - limitBase}&limit=${limitBase}`;
+                pagina = Listado.count / limitBase;
+                offsetTemp = (pagina / limitBase) - 1 ;
                 break;
             }
             default:{
+                if(pagina < 0) {
+                    offsetTemp = 0;
+                    pagina = 0;
+                    break;
+                }
+                url = `https://pokeapi.co/api/v2/pokemon/?offset=${(name * limitBase) - limitBase}&limit=${limitBase}`;
+                pagina = name;
+                let comparador = limitBase * offsetTemp;
+                if(pagina > comparador + limitBase) offsetTemp++;
+                if(pagina < comparador) offsetTemp--
                 break;
             }
         }
+            console.log(offsetTemp);
+            setOffset(offsetTemp);
+            setPaginaActual(pagina);
             pedirListado(url);
     }
 
-    
 
     return (
     <Container fluid className='mt-4'>
-                <Pagination>
-                    <Pagination.First onClick={handlePaginacion('primero')} disabled={!(PaginaAnterior && pokes)} />
-                    <Pagination.Prev onClick={handlePaginacion('previo')} disabled={!(PaginaAnterior && pokes)} />
-                    <Pagination.Next onClick={handlePaginacion('siguiente')} disabled={!(PaginaSiguiente && pokes)} />
-                    <Pagination.Last onClick={handlePaginacion('ultimo')} disabled={!(PaginaSiguiente && pokes)}/>
-                </Pagination>
-                
-                    <Container fluid className='p-1'>
+                <Paginacion handleClick = {handlePaginacion} disabled = {(pokes? false : true)} paginaActual = {PaginaActual} maximo = {Listado.count / limitBase} limite={limitBase} offset={offset}/>               
+                    <Container className='p-2'>
                         <CardColumns>
                             {
                                 (pokes && Listado.results)? 
@@ -89,13 +106,6 @@ const ListadoPokemon = () => {
                             }
                         </CardColumns>
                     </Container>
-                    
-                <Pagination className='mt-3'>
-                    <Pagination.First onClick={handlePaginacion('primero')} disabled={!(PaginaAnterior && pokes)} />
-                    <Pagination.Prev onClick={handlePaginacion('previo')} disabled={!(PaginaAnterior && pokes)} />
-                    <Pagination.Next onClick={handlePaginacion('siguiente')} disabled={!(PaginaSiguiente && pokes)} />
-                    <Pagination.Last onClick={handlePaginacion('ultimo')} disabled={!(PaginaSiguiente && pokes)}/>
-                </Pagination>
     </Container>
     );
 };
