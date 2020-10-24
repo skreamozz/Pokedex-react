@@ -87,7 +87,6 @@ const ListadoPokemon = () => {
                 break;
             }
         }
-            console.log(offsetTemp);
             setOffset(offsetTemp);
             setPaginaActual(pagina);
             pedirListado(url);
