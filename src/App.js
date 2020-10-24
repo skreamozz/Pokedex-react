@@ -18,7 +18,7 @@ const App = () => {
           <Col lg={5}>
             <Pokedex/>
           </Col>
-          <Col lg={6}>
+          <Col lg={7}>
             <ListadoPokemon/>
           </Col>
         </Row>
