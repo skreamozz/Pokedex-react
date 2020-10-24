@@ -23,7 +23,7 @@ const Sprite = ({spriteSrc}) => {
 
 
     return (
-        <Card border="success" >
+        <Card border="success d-flex" >
             {sprite != null?
                 <Image fluid className=' m-auto' src={sprite} alt='sprite' />:
                 <Spinner animation='border' className='m-auto' />

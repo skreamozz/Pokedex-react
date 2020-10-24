@@ -25,7 +25,7 @@ const Paginacion = React.memo(({handleClick, disabled, paginaActual,maximo, limi
 
     return (
         
-            <Pagination className= 'overflow-auto' >
+            <Pagination className= 'overflow-auto m-auto' >
                 <Pagination.First onClick={handleClick('primero')} disabled = {disabled || paginaActual <= 1}/>
                 <Pagination.Prev onClick={handleClick('previo')} disabled = {disabled || paginaActual <= 1}/>
                 <Pagination.Ellipsis onClick={handleClick((paginaActual - limite <= 0)? 1 : paginaActual - limite )}   disabled={disabled || paginaActual <= 1}/>

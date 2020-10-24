@@ -74,7 +74,8 @@ const Pokedex = () => {
                                 pokemonData === undefined ?
                                     <div>{error? <span>pokemon inexistente.</span> : '' }</div>:
                                     <Cuerpo data={pokemonData}/> :
-                                <Spinner animation='border' className='m-auto'  />
+                                    <Card.Text className='text-center'><Spinner animation='border'/></Card.Text>
+                                
                         }
                         
                         
@@ -88,7 +89,7 @@ const Pokedex = () => {
 const Cuerpo = ({data}) => {
     return(
     <Card className='mt-2 overflow-auto'>
-        <Card.Header><h3>{data.name}</h3></Card.Header>
+        <Card.Header className='text-center'><h3 className='m-auto'>{data.name}</h3></Card.Header>
         <Card.Body>
             <Sprite spriteSrc={data.sprites}/> 
             <Types types={data.types} />

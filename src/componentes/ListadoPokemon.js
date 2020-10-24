@@ -96,14 +96,17 @@ const ListadoPokemon = () => {
     return (
     <Container fluid className='mt-4'>
                 <Paginacion handleClick = {handlePaginacion} disabled = {(pokes? false : true)} paginaActual = {PaginaActual} maximo = {Listado.count / limitBase} limite={limitBase} offset={offset}/>               
-                    <Container className='p-2'>
-                        <CardColumns>
-                            {
-                                (pokes && Listado.results)? 
-                                pokes.map((pokemon,key) => <PokemonCard key={key} pokemonProp = {pokemon}/>): 
-                                <Spinner animation='border' className='m-auto' />
+                    <Container className='p-2 text-center'>
+                        {
+                            //pokes && Listado.results
+                            (pokes && Listado.results)?
+                            <CardColumns>
+                            { 
+                                pokes.map((pokemon,key) => <PokemonCard key={key} pokemonProp = {pokemon}/>)   
                             }
-                        </CardColumns>
+                        </CardColumns>:
+                        <Spinner animation='border' />
+                        }
                     </Container>
     </Container>
     );
