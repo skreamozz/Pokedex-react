@@ -1,25 +1,20 @@
-import React,{useState, useContext} from 'react';
-
-
+import React, { useState, useContext } from "react";
 
 const PokemonContext = React.createContext();
 
-
 export const PokemonProvider = (props) => {
-    const [pokemonSeleccionado,setPokemonSeleccionado] = useState('');
+  const [pokemonSeleccionado, setPokemonSeleccionado] = useState("");
 
-    const value = {pokemonSeleccionado,setPokemonSeleccionado};
+  const value = { pokemonSeleccionado, setPokemonSeleccionado };
 
-    return <PokemonContext.Provider value={value} {...props}/>
-}
-
+  return <PokemonContext.Provider value={value} {...props} />;
+};
 
 export const usePokemonContext = () => {
-    const context = useContext(PokemonContext);
-    if(!context){
-        throw new Error('no esta en el contexto adecuado');
-    }
+  const context = useContext(PokemonContext);
+  if (!context) {
+    throw new Error("no esta en el contexto adecuado");
+  }
 
-    return context;
-
-}
+  return context;
+};
